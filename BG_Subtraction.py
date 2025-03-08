@@ -35,7 +35,7 @@ with tab1:
     """)
 
     # Display an example image (replace with your own link if necessary)
-    image = Image.open(r"https://learnopencv.com/moving-object-detection-with-opencv/")
+    image = "https://learnopencv.com/wp-content/uploads/2024/01/erode-dilate-1.png"
     st.image(image, caption="Example: Moving objects (white) vs. background (black)", use_container_width=True)
 
     # Section: Real-world Example
@@ -46,14 +46,6 @@ with tab1:
     - When a car enters, the difference between the current frame and the background model is computed.
     - The result is a mask highlighting the car as the moving object.
     """)
-
-    # Sidebar for extra information and navigation
-    st.sidebar.title("Learn More")
-    st.sidebar.info("Use the interactive slider below to conceptually adjust a threshold value for detecting differences between the frame and the background model.")
-
-    # Interactive element: slider (for conceptual demonstration)
-    threshold = st.sidebar.slider("Threshold value (conceptual)", min_value=0, max_value=100, value=50)
-    st.sidebar.write(f"You selected a threshold of: **{threshold}**")
 
     # Explanation conclusion
     st.markdown("### Summary")
