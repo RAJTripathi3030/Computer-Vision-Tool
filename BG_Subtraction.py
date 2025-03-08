@@ -35,7 +35,7 @@ with tab1:
     """)
 
     # Display an example image (replace with your own link if necessary)
-    image = Image.open(r"C:\Users\rajtr\Desktop\Data Science\Projects\Computer Vision App (streamlit)\Images\bgsub1.webp")
+    image = Image.open(r"https://learnopencv.com/moving-object-detection-with-opencv/")
     st.image(image, caption="Example: Moving objects (white) vs. background (black)", use_container_width=True)
 
     # Section: Real-world Example
