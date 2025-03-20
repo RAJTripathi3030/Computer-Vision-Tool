@@ -8,10 +8,9 @@ import os
 model = YOLO("yolov8n-seg.pt")
 
 st.title("Object Segmentation on Uploaded Video with YOLOv8")
-st.write("Upload a video to start processing.")
 
 # Uploaded File or Video 
-video_file = st.file_uploader("Upload a video", type=["mp4", "avi", "mov", "mkv"])
+video_file = st.file_uploader("Upload a video to start processing.", type=["mp4", "avi", "mov", "mkv"])
 if video_file is not None:
     temp_dir = tempfile.TemporaryDirectory()
     video_path = os.path.join(temp_dir.name, video_file.name)
