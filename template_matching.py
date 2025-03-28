@@ -1,8 +1,8 @@
-import streamlit as st
+import streamlit as st 
+import numpy as np
+import cv2 
+from PIL import Image
 
-st.title("Template Matching in Computer Vision")
-
-# Creating tabs
 tab1, tab2 = st.tabs(["About Template Matching", "Implementation"])
 
 with tab1:
@@ -31,3 +31,21 @@ with tab1:
 
 with tab2:
     st.write("This tab is currently empty.")
+    uploaded_files = st.file_uploader(
+        "Upload a template and a main image",
+        type=["jpg", "jpeg", "png"],
+        accept_multiple_files=True
+    )   
+    if uploaded_files and len(uploaded_files) == 2:
+        template_image, main_image = uploaded_files
+        col1, col2 = st.columns(2)
+        with col1:
+            template_image = cv2.cvtColor(np.array(Image.open(template_image)), cv2.COLOR_RGB2GRAY)
+            st.image(template_image, caption="Template Image", use_container_width=True)
+        with col2:
+            main_image = cv2.cvtColor(np.array(Image.open(main_image)), cv2.COLOR_RGB2GRAY)
+            st.image(main_image, caption="Main Image", use_container_width=True)
+    else:
+        st.warning("Please upload exactly two images.")
+        
+        
