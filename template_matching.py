@@ -41,11 +41,40 @@ with tab2:
         col1, col2 = st.columns(2)
         with col1:
             template_image = cv2.cvtColor(np.array(Image.open(template_image)), cv2.COLOR_RGB2GRAY)
+            w, h = template_image.shape[::-1] # Get the width and height of the template image
             st.image(template_image, caption="Template Image", use_container_width=True)
         with col2:
             main_image = cv2.cvtColor(np.array(Image.open(main_image)), cv2.COLOR_RGB2GRAY)
             st.image(main_image, caption="Main Image", use_container_width=True)
+        st.success("Please select the matching method from the sidebar to continue.")
+        
+        matching_methods = {
+            "Correlation Coefficient": "TM_CCOEFF",
+            "Normalized Correlation Coefficient": "TM_CCOEFF_NORMED",
+            "Cross-Correlation": "TM_CCORR",
+            "Normalized Cross-Correlation": "TM_CCORR_NORMED",
+            "Sum of Squared Differences": "TM_SQDIFF",
+            "Normalized Sum of Squared Differences": "TM_SQDIFF_NORMED"
+        }
+
+        
+        st.sidebar.write("Select the matching method")
+        matching_option = st.sidebar.selectbox("", ["Correlation Coefficient", "Normalized Correlation Coefficient", "Cross-Correlation", "Normalized Cross-Correlation", "Sum of Squared Differences", "Normalized Sum of Squared Differences"])
+        
+        if st.sidebar.button("Match Images") and matching_option: 
+            method = matching_methods[matching_option]
+            result = cv2.matchTemplate(main_image, template_image, getattr(cv2, method))
+            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+            if method in ["TM_SQDIFF", "TM_SQDIFF_NORMED"]:
+                top_left = min_loc
+            else:
+                top_left = max_loc
+            
+            bottom_right = (top_left[0] + w, top_left[1] + h)
+            final_image = cv2.rectangle(main_image, top_left, bottom_right, 255, 2)
+            
+            st.image(final_image, caption="Matched Image", use_container_width=True)
+        
     else:
         st.warning("Please upload exactly two images.")
-        
         
